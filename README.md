@@ -1,5 +1,5 @@
-This project is a complete Machine Learning Model based on kaggle dataset of students performance in exams (https://www.kaggle.com/datasets/spscientist/students-performance-in-exams?datasetId=74977). 
-Score in maths <b>math_score</b> column is the target column predicted by all the other columns : <b>gender, race_ethnicity, parental_level_of_education,	lunch, test_preparation_course,	reading_score,	writing_score</b>
+This project is a complete Machine Learning Model based on kaggle dataset of students performance in exams (https://www.kaggle.com/datasets/spscientist/students-performance-in-exams?datasetId=74977) using both Jupyter notebooks(.ipynb) and Python(.py). 
+Score in maths (<b>math_score</b>) column is the target column predicted by all the other columns : <b>gender, race_ethnicity, parental_level_of_education,	lunch, test_preparation_course,	reading_score,	writing_score</b>
 
 The model performs:
 - <b>Data Collection</b> from kaggle

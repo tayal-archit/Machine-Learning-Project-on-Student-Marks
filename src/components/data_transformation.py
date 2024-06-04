@@ -16,11 +16,11 @@ from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl")
+    preprocessor_obj_file_path = os.path.join('artifacts',"preprocessor.pkl")
 
 class DataTransformation:
     def __init__(self):
-        self.data_transformation_config=DataTransformationConfig()
+        self.data_transformation_config = DataTransformationConfig()
 
     def get_data_transformer_object(self):
         # This function is responsible for data trnasformation
@@ -29,22 +29,22 @@ class DataTransformation:
             categorical_columns = ["gender", "race_ethnicity", "parental_level_of_education", "lunch", "test_preparation_course"]
 
             num_pipeline= Pipeline(
-                steps=[ ("imputer",SimpleImputer(strategy="median")), # To handle missing values as median values
-                    ("scaler",StandardScaler()) # To scale the features so no single feature dominates the distance calculations
+                steps=[ ("imputer", SimpleImputer(strategy="median")), # To handle missing values as median values
+                    ("scaler", StandardScaler()) # To scale the features so no single feature dominates the distance calculations
                 ]
             )
 
             cat_pipeline=Pipeline(
-                steps=[ ("imputer",SimpleImputer(strategy="most_frequent")), # to handle missing values as most frequent values
-                    ("one_hot_encoder",OneHotEncoder()), # categorical => numeric encoding
-                    ("scaler",StandardScaler(with_mean=False)) 
+                steps=[ ("imputer", SimpleImputer(strategy="most_frequent")), # to handle missing values as most frequent values
+                    ("one_hot_encoder", OneHotEncoder()), # categorical => numeric encoding
+                    ("scaler", StandardScaler(with_mean=False)) 
                 ]
             )
 
             logging.info(f"Categorical columns: {categorical_columns}")
             logging.info(f"Numerical columns: {numerical_columns}")
 
-            preprocessor=ColumnTransformer(
+            preprocessor = ColumnTransformer(
                 [ ("num_pipeline", num_pipeline, numerical_columns),
                     ("cat_pipelines", cat_pipeline, categorical_columns)
                 ]
@@ -55,24 +55,24 @@ class DataTransformation:
         except Exception as e:
             raise CustomException(e,sys)
         
-    def initiate_data_transformation(self,train_path,test_path):
+    def initiate_data_transformation(self, train_path, test_path):
 
         try:
-            train_df=pd.read_csv(train_path)
-            test_df=pd.read_csv(test_path)
+            train_df = pd.read_csv(train_path)
+            test_df = pd.read_csv(test_path)
             logging.info("Read train and test data completed")
 
             logging.info("Obtaining preprocessing object")
-            preprocessing_obj=self.get_data_transformer_object()
+            preprocessing_obj = self.get_data_transformer_object()
 
             target_column_name = "math_score"
             numerical_columns = ["writing_score", "reading_score"]
 
-            input_feature_train_df = train_df.drop(columns=[target_column_name],axis=1)
+            input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
             target_feature_train_df = train_df[target_column_name]
 
-            input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)
-            target_feature_test_df=test_df[target_column_name]
+            input_feature_test_df = test_df.drop(columns=[target_column_name],axis=1)
+            target_feature_test_df = test_df[target_column_name]
 
             logging.info(f"Applying preprocessing object on training dataframe and testing dataframe.")
 
